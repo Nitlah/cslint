@@ -73,7 +73,7 @@ func (l *nonEVCertLocalityNameMissing) CheckApplies(c *x509.Certificate) bool {
 }
 
 func (l *nonEVCertLocalityNameMissing) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.CABFOrganizationIdentifier == nil || (c.CABFOrganizationIdentifier.State == "" && c.Subject.Locality == nil) {
+	if ((c.CABFOrganizationIdentifier == nil) || (c.CABFOrganizationIdentifier.State == "")) && (c.Subject.Locality == nil) {
 		return &lint.LintResult{Status: lint.Error}
 	} else {
 		return &lint.LintResult{Status: lint.Pass}
