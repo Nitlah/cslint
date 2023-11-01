@@ -44,7 +44,7 @@ In addition, the CA MAY use RSASSA-PKCS1-v1_5 with SHA-1 if one of the following
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_rsa_signature_algorithm_id_check",
-		Description:   "The CA SHALL use signature algorithms list in 7.1.2.3.1",
+		Description:   "The CA SHALL use signature algorithms list in 7.1.3.2.1",
 		Citation:      "BRs: 7.1.3.2.1",
 		Source:        lint.CABFBaselineRequirements,
 		EffectiveDate: util.CABF_CSBR_ALGO_ID_DATE,
