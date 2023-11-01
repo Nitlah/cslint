@@ -15,7 +15,6 @@ package cabr_br
  */
 
 import (
-	"fmt"
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 	"github.com/zmap/zlint/v3/util"
@@ -53,7 +52,7 @@ func NewSubCertKeyUsageMissing() lint.LintInterface {
 }
 
 func (l *subCertKeyUsageMissing) CheckApplies(c *x509.Certificate) bool {
-	fmt.Print("text")
+	// fmt.Print("text")
 	return util.IsSubscriberCert(c)
 }
 

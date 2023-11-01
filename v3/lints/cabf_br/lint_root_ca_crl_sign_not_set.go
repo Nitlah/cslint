@@ -45,7 +45,7 @@ func NewRootCaCRLSignNotSet() lint.LintInterface {
 }
 
 func (l *rootCaCRLSignNotSet) CheckApplies(c *x509.Certificate) bool {
-	return c.IsCA && util.IsExtInCert(c, util.KeyUsageOID)
+	return util.IsRootCA(c) && util.IsExtInCert(c, util.KeyUsageOID)
 }
 
 func (l *rootCaCRLSignNotSet) Execute(c *x509.Certificate) *lint.LintResult {
