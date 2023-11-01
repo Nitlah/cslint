@@ -37,16 +37,16 @@ The keyIdentifier field of the authorityKeyIdentifier extension MUST
    certification path building.
 ***********************************************************************/
 
-func init() {
-	lint.RegisterLint(&lint.Lint{
-		Name:          "e_ext_authority_key_identifier_no_key_identifier",
-		Description:   "CAs must include keyIdentifer field of AKI in all non-self-issued certificates",
-		Citation:      "BRs:7.1.2.3 & RFC 5280: 4.2.1.1",
-		Source:        lint.RFC5280,
-		EffectiveDate: util.RFC2459Date,
-		Lint:          NewAuthorityKeyIdNoKeyIdField,
-	})
-}
+//func init() {
+//	lint.RegisterLint(&lint.Lint{
+//		Name:          "e_ext_authority_key_identifier_no_key_identifier",
+//		Description:   "CAs must include keyIdentifer field of AKI in all non-self-issued certificates",
+//		Citation:      "BRs:7.1.2.3 & RFC 5280: 4.2.1.1",
+//		Source:        lint.RFC5280,
+//		EffectiveDate: util.RFC2459Date,
+//		Lint:          NewAuthorityKeyIdNoKeyIdField,
+//	})
+//}
 
 func NewAuthorityKeyIdNoKeyIdField() lint.LintInterface {
 	return &authorityKeyIdNoKeyIdField{}

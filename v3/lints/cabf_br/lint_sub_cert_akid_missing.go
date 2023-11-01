@@ -45,7 +45,6 @@ func NewSubCertAuthorityKeyIdMissing() lint.LintInterface {
 }
 
 func (l *subCertAuthorityKeyIdMissing) CheckApplies(c *x509.Certificate) bool {
-
 	return util.IsSubscriberCert(c)
 }
 
