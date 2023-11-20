@@ -33,9 +33,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_cert_has_domain_component",
 		Description:   "domainComponent：This field MUST not be present in a Code Signing Certificate.",
-		Citation:      "7.1.4.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.4.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewCertDomainComponent,
 	})
 }
@@ -45,16 +45,7 @@ func NewCertDomainComponent() lint.LintInterface {
 }
 
 func (l *certDomainComponent) CheckApplies(c *x509.Certificate) bool {
-	ekuFields := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				ekuFields = true
-				break
-			}
-		}
-	}
-	return ekuFields && util.IsSubscriberCert(c)
+	return util.IsSubscriberCert(c)
 }
 
 func (l *certDomainComponent) Execute(c *x509.Certificate) *lint.LintResult {

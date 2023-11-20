@@ -35,8 +35,8 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_ca_basic_constraints_missing",
 		Description:   "This extension MUST be present and MUST be marked critical.",
-		Citation:      "BRs: 7.1.2.1, RFC 5280: 4.2.1.3",
-		Source:        lint.CABFBaselineRequirements,
+		Citation:      "CSBRs: 7.1.2.1, RFC 5280: 4.2.1.3",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.RFC2459Date,
 		Lint:          NewsubCABasicConstraintsMissing,
 	})

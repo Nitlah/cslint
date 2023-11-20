@@ -50,9 +50,9 @@ func init() {
 			"• Lifetime Signing OID (1.3.6.1.4.1.311.10.3.13)" +
 			"• id-kp-emailProtection" +
 			"• Document Signing (1.3.6.1.4.1.311.3.10.3.12)",
-		Citation:      "7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3f",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewCodeSigningSubCertHasOtherEKUs,
 	})
 }
@@ -62,13 +62,7 @@ func NewCodeSigningSubCertHasOtherEKUs() lint.LintInterface {
 }
 
 func (l *subCSCertHasOtherEKUs) CheckApplies(c *x509.Certificate) bool {
-	codeSigningPresent := false
-	for _, v := range c.ExtKeyUsage {
-		if v == x509.ExtKeyUsageCodeSigning {
-			codeSigningPresent = true
-		}
-	}
-	return util.IsSubscriberCert(c) && codeSigningPresent
+	return util.IsSubscriberCert(c)
 }
 
 func (l *subCSCertHasOtherEKUs) Execute(c *x509.Certificate) *lint.LintResult {

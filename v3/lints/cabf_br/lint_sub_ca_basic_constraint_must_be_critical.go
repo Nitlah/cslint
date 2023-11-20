@@ -35,16 +35,16 @@ type subCABasicConstraintsMustBeCritical struct{}
 This extension MUST be present and MUST be marked critical. The cA field MUST be set
 true. The pathLenConstraint field MAY be present.
 */
-//func init() {
-//	lint.RegisterLint(&lint.Lint{
-//		Name:          "e_sub_ca_basic_constraints_must_be_critical",
-//		Description:   "This extension MUST be present and MUST be marked critical.",
-//		Citation:      "BRs: 7.1.2.2d",
-//		Source:        lint.CABFBaselineRequirements,
-//		EffectiveDate: util.CABEffectiveDate,
-//		Lint:          NewSubCABasicConstraintsMustBeCritical,
-//	})
-//}
+func init() {
+	lint.RegisterLint(&lint.Lint{
+		Name:          "e_sub_ca_basic_constraints_must_be_critical",
+		Description:   "This extension MUST be present and MUST be marked critical.",
+		Citation:      "CSBRs: 7.1.2.2d",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.RFC2459Date,
+		Lint:          NewSubCABasicConstraintsMustBeCritical,
+	})
+}
 
 func NewSubCABasicConstraintsMustBeCritical() lint.LintInterface {
 	return &subCABasicConstraintsMustBeCritical{}

@@ -26,8 +26,8 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_root_ca_key_usage_must_be_critical",
 		Description:   "Root CA certificates MUST have Key Usage Extension marked critical",
-		Citation:      "BRs: 7.1.2.1",
-		Source:        lint.CABFBaselineRequirements,
+		Citation:      "CSBRs: 7.1.2.1",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.RFC2459Date,
 		Lint:          NewRootCAKeyUsageMustBeCritical,
 	})

@@ -30,38 +30,30 @@ private key is compromised. The validity for a Timestamp Certificate must not ex
 The Timestamp Certificate MUST meet the requirements in Section 6.1.5 for the communicated
 time period.
 */
-type codeSigningValidTooLong struct{}
+type timeStampValidTooLong struct{}
 
-func init() {
-	lint.RegisterLint(&lint.Lint{
-		Name:          "e_code_signing_valid_time_too_long",
-		Description:   "code signing certificates must be 39 months in validity or less",
-		Citation:      "BRs:6.3.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.SubCert39Month,
-		Lint:          NewCodeSigningValidTooLong,
-	})
+//TODO:用于时间戳证书
+//func init() {
+//	lint.RegisterLint(&lint.Lint{
+//		Name:          "e_time_stamp_valid_time_too_long",
+//		Description:   "time stamp certificates must be 135 months in validity or less",
+//		Citation:      "BRs:6.3.2",
+//		Source:        lint.CABFEVGuidelines,
+//		EffectiveDate: util.ZeroDate,
+//		Lint:          NewTimeStampValidTooLong,
+//	})
+//}
+
+func NewTimeStampValidTooLong() lint.LintInterface {
+	return &timeStampValidTooLong{}
 }
 
-func NewCodeSigningValidTooLong() lint.LintInterface {
-	return &codeSigningValidTooLong{}
+func (l *timeStampValidTooLong) CheckApplies(c *x509.Certificate) bool {
+	return util.IsSubscriberCert(c)
 }
 
-func (l *codeSigningValidTooLong) CheckApplies(c *x509.Certificate) bool {
-	codesigning := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codesigning = true
-				break
-			}
-		}
-	}
-	return codesigning && util.IsSubscriberCert(c)
-}
-
-func (l *codeSigningValidTooLong) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.NotBefore.AddDate(0, 39, 0).Before(c.NotAfter) {
+func (l *timeStampValidTooLong) Execute(c *x509.Certificate) *lint.LintResult {
+	if c.NotBefore.AddDate(0, 135, 0).Before(c.NotAfter) {
 		return &lint.LintResult{Status: lint.Error}
 	}
 	return &lint.LintResult{Status: lint.Pass}

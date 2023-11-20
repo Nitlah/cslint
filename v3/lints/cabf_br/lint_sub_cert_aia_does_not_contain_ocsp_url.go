@@ -37,9 +37,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_aia_does_not_contain_ocsp_url",
 		Description:   "Subscriber Certificate: . If the CA provides OCSP responses, it MUST contain the HTTP URL of the Issuing CA’s OCSP responder (accessMethod = 1.3.6.1.5.5.7.48.1).",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertOcspUrl,
 	})
 }

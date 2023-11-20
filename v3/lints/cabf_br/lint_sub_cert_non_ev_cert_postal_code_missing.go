@@ -26,9 +26,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "n_non_EV_cert_postal_code_missing",
 		Description:   "Certificate Field: subject:postalCode (OID: 2.5.4.17) Required/Optional: Optional",
-		Citation:      "BRs: 7.1.4.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.4.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewNonEVCertPostalCodeMissing,
 	})
 }
@@ -38,16 +38,7 @@ func NewNonEVCertPostalCodeMissing() lint.LintInterface {
 }
 
 func (l *nonEVCertPostalCodeMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return codeSigningParent && util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
+	return util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
 }
 
 func (l *nonEVCertPostalCodeMissing) Execute(c *x509.Certificate) *lint.LintResult {

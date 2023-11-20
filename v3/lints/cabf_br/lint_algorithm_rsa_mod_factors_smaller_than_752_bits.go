@@ -33,8 +33,8 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_rsa_mod_factors_smaller_than_752",
 		Description:   "RSA: Modulus SHOULD also have the following characteristics: no factors smaller than 752",
-		Citation:      "BRs: 6.1.6",
-		Source:        lint.CABFBaselineRequirements,
+		Citation:      "CSBRs: 6.1.6",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.CABV113Date,
 		Lint:          NewRsaModSmallFactor,
 	})

@@ -33,9 +33,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_authority_key_identifier_missing",
 		Description:   "This extension MUST be present and MUST NOT be marked critical",
-		Citation:      "BRs:7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBRV30DATE,
 		Lint:          NewSubCertAuthorityKeyIdMissing,
 	})
 }

@@ -50,9 +50,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_ca_akid_critical",
 		Description:   "This extension MUST be present and MUST NOT be marked critical.",
-		Citation:      "7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBRV30DATE,
 		Lint:          NewSubCaAuthorityKeyIdMissing,
 	})
 }
@@ -68,7 +68,7 @@ func (l *subCaAuthorityKeyIdMissing) CheckApplies(c *x509.Certificate) bool {
 func (l *subCaAuthorityKeyIdMissing) Execute(c *x509.Certificate) *lint.LintResult {
 	authkeyOID := util.GetExtFromCert(c, util.AuthkeyOID)
 	if authkeyOID.Critical {
-		return &lint.LintResult{Status: lint.Warn}
+		return &lint.LintResult{Status: lint.Error}
 	}
 	return &lint.LintResult{Status: lint.Pass}
 

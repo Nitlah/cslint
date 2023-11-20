@@ -28,16 +28,16 @@ RFC 5280: 4.2.1.3
 basicConstraints：该字段必须被设置为关键扩展
 ************************************************/
 
-//func init() {
-//	lint.RegisterLint(&lint.Lint{
-//		Name:          "e_root_ca_basic_constraints_not_critical",
-//		Description:   "Root CA Certificate: basicConstraints: This extension MUST appear as a critical extension.",
-//		Citation:      "BRs: 7.1.2.1, RFC 5280: 4.2.1.3",
-//		Source:        lint.CABFBaselineRequirements,
-//		EffectiveDate: util.RFC3280Date,
-//		Lint:          NewRootCABasicConstraintsCritical,
-//	})
-//}
+func init() {
+	lint.RegisterLint(&lint.Lint{
+		Name:          "e_root_ca_basic_constraints_not_critical",
+		Description:   "Root CA Certificate: basicConstraints: This extension MUST appear as a critical extension.",
+		Citation:      "CSBRs: 7.1.2.1, RFC 5280: 4.2.1.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.RFC3280Date,
+		Lint:          NewRootCABasicConstraintsCritical,
+	})
+}
 
 func NewRootCABasicConstraintsCritical() lint.LintInterface {
 	return &rootCABasicConstraintsCritical{}

@@ -34,16 +34,16 @@ exclusively for validating digital signatures on CRLs and ones that contain key
 management public keys used with certificate.
 ************************************************/
 
-func init() {
-	lint.RegisterLint(&lint.Lint{
-		Name:          "e_basic_constraints_not_critical",
-		Description:   "basicConstraints MUST appear as a critical extension",
-		Citation:      "RFC 5280: 4.2.1.9, BRs: 7.1.2.1, BRs: 7.1.2.2d",
-		Source:        lint.RFC5280,
-		EffectiveDate: util.RFC2459Date,
-		Lint:          NewBasicConstCrit,
-	})
-}
+//func init() {
+//	lint.RegisterLint(&lint.Lint{
+//		Name:          "e_basic_constraints_not_critical",
+//		Description:   "basicConstraints MUST appear as a critical extension",
+//		Citation:      "RFC 5280: 4.2.1.9, BRs: 7.1.2.1, BRs: 7.1.2.2d",
+//		Source:        lint.CSBaselineRequirements,
+//		EffectiveDate: util.RFC2459Date,
+//		Lint:          NewBasicConstCrit,
+//	})
+//}
 
 func NewBasicConstCrit() lint.LintInterface {
 	return &basicConstCrit{}

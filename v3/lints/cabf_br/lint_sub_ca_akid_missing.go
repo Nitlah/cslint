@@ -36,9 +36,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_ca_akid_missing",
 		Description:   "This extension MUST be present and MUST NOT be marked critical.",
-		Citation:      "7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.2 & RFC 5280: 4.2.1.1",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.RFC2459Date,
 		Lint:          NewSubCaAuthorityKeyIdCritical,
 	})
 }

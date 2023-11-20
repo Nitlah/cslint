@@ -37,9 +37,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_ku_other_bit_set",
 		Description:   "The bit position for digitalSignature MUST be set. Bit positions for keyCertSign and cRLSign MUST NOT be set. All other bit positions SHOULD NOT be set",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertKUOtherBitSet,
 	})
 }

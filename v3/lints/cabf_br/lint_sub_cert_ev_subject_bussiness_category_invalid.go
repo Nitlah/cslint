@@ -37,8 +37,8 @@ func init() {
 		Description: "This field MUST contain one of the following strings:" +
 			" Private Organization,Government Entity, Business Entity, or Non-Commercial Entity depending upon " +
 			"whether the Subject qualifies under the terms of Section 8.5.2, 8.5.3, 8.5.4 or 8.5.5 of these Guidelines, respectively",
-		Citation:      "EVs: 9.2.4",
-		Source:        lint.CABFEVGuidelines,
+		Citation:      "CSBRs: 7.1.4.2.4",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.ZeroDate,
 		Lint:          NewSubjectBussinessCategoryValid,
 	})
@@ -49,16 +49,7 @@ func NewSubjectBussinessCategoryValid() lint.LintInterface {
 }
 
 func (l *evSubjectBussinessCategory) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return util.IsEV(c.PolicyIdentifiers) && util.TypeInName(&c.Subject, util.BusinessOID) && codeSigningParent
+	return util.IsEV(c.PolicyIdentifiers) && util.TypeInName(&c.Subject, util.BusinessOID)
 }
 
 func (l *evSubjectBussinessCategory) Execute(c *x509.Certificate) *lint.LintResult {

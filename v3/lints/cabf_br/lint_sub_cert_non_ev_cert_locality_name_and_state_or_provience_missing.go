@@ -48,9 +48,9 @@ func init() {
 		Name: "e_non_ev_cert_locality_name_and_state_or_provience_missing",
 		Description: "Certificate Field: subject:localityName (OID: 2.5.4.7) " +
 			"Required/Optional: Required if the subject:stateOrProvinceName field is absent",
-		Citation:      "BRs: 7.1.4.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.4.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewNonEVCertLocalityNameMissing,
 	})
 }
@@ -60,16 +60,7 @@ func NewNonEVCertLocalityNameMissing() lint.LintInterface {
 }
 
 func (l *nonEVCertLocalityNameMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return codeSigningParent && util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
+	return util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
 }
 
 func (l *nonEVCertLocalityNameMissing) Execute(c *x509.Certificate) *lint.LintResult {

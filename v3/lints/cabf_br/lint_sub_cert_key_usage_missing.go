@@ -40,9 +40,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_key_usage_missing",
 		Description:   "This extension MUST be present and MUST be marked critical.",
-		Citation:      "BRs: 7.1.2.3e, RFC 5280: 4.2.1.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.RFC3280Date,
+		Citation:      "CSBRs: 7.1.2.3e, RFC 5280: 4.2.1.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertKeyUsageMissing,
 	})
 }
@@ -52,7 +52,6 @@ func NewSubCertKeyUsageMissing() lint.LintInterface {
 }
 
 func (l *subCertKeyUsageMissing) CheckApplies(c *x509.Certificate) bool {
-	// fmt.Print("text")
 	return util.IsSubscriberCert(c)
 }
 

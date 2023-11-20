@@ -26,9 +26,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_cert_policy_empty",
 		Description:   "Subscriber certificates must contain at least one policy identifier that indicates adherence to CAB standards",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertPolicyEmpty,
 	})
 }

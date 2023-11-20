@@ -37,9 +37,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_ecdsa_signature_algorithm_id_check",
 		Description:   "The CA SHALL use one of the following signature algorithms: • ECDSA with SHA‐256 • ECDSA with SHA‐384 • ECDSA with SHA‐512",
-		Citation:      "7.1.3.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.3.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBRV30DATE,
 		Lint:          NewECDSASignatureAlgorithmIdentiferCheck,
 	})
 }

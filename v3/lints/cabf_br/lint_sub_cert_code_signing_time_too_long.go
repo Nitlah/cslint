@@ -30,38 +30,29 @@ private key is compromised. The validity for a Timestamp Certificate must not ex
 The Timestamp Certificate MUST meet the requirements in Section 6.1.5 for the communicated
 time period.
 */
-type timeStampValidTooLong struct{}
+type codeSigningValidTooLong struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_time_stamp_valid_time_too_long",
-		Description:   "time stamp certificates must be 135 months in validity or less",
-		Citation:      "BRs:6.3.2",
-		Source:        lint.CABFEVGuidelines,
-		EffectiveDate: util.ZeroDate,
-		Lint:          NewTimeStampValidTooLong,
+		Name:          "e_code_signing_valid_time_too_long",
+		Description:   "code signing certificates must be 39 months in validity or less",
+		Citation:      "CSBRs:6.3.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
+		Lint:          NewCodeSigningValidTooLong,
 	})
 }
 
-func NewTimeStampValidTooLong() lint.LintInterface {
-	return &timeStampValidTooLong{}
+func NewCodeSigningValidTooLong() lint.LintInterface {
+	return &codeSigningValidTooLong{}
 }
 
-func (l *timeStampValidTooLong) CheckApplies(c *x509.Certificate) bool {
-	timestamp := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageTimeStamping {
-				timestamp = true
-				break
-			}
-		}
-	}
-	return timestamp && util.IsSubscriberCert(c)
+func (l *codeSigningValidTooLong) CheckApplies(c *x509.Certificate) bool {
+	return util.IsSubscriberCert(c)
 }
 
-func (l *timeStampValidTooLong) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.NotBefore.AddDate(0, 135, 0).Before(c.NotAfter) {
+func (l *codeSigningValidTooLong) Execute(c *x509.Certificate) *lint.LintResult {
+	if c.NotBefore.AddDate(0, 39, 0).Before(c.NotAfter) {
 		return &lint.LintResult{Status: lint.Error}
 	}
 	return &lint.LintResult{Status: lint.Pass}

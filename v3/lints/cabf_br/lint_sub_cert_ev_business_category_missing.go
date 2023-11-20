@@ -20,36 +20,31 @@ import (
 	"github.com/zmap/zlint/v3/util"
 )
 
-type rootCAContainsEKU struct{}
-
-/************************************************
-BRs: 7.1.2.1d extendedKeyUsage
-This extension MUST NOT be present.
-************************************************/
+type evNoBiz struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_root_ca_extended_key_usage_present",
-		Description:   "Root CA Certificate: extendedKeyUsage MUST NOT be present.",
-		Citation:      "BRs: 7.1.2.1",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
-		Lint:          NewRootCAContainsEKU,
+		Name:          "e_ev_business_category_missing",
+		Description:   "EV certificates must include businessCategory in subject",
+		Citation:      "CSBRs: 7.1.4.2.4",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.ZeroDate,
+		Lint:          NewEvNoBiz,
 	})
 }
 
-func NewRootCAContainsEKU() lint.LintInterface {
-	return &rootCAContainsEKU{}
+func NewEvNoBiz() lint.LintInterface {
+	return &evNoBiz{}
 }
 
-func (l *rootCAContainsEKU) CheckApplies(c *x509.Certificate) bool {
-	return util.IsRootCA(c)
+func (l *evNoBiz) CheckApplies(c *x509.Certificate) bool {
+	return util.IsEV(c.PolicyIdentifiers) && util.IsSubscriberCert(c)
 }
 
-func (l *rootCAContainsEKU) Execute(c *x509.Certificate) *lint.LintResult {
-	if util.IsExtInCert(c, util.EkuSynOid) {
-		return &lint.LintResult{Status: lint.Error}
-	} else {
+func (l *evNoBiz) Execute(c *x509.Certificate) *lint.LintResult {
+	if util.TypeInName(&c.Subject, util.BusinessOID) {
 		return &lint.LintResult{Status: lint.Pass}
+	} else {
+		return &lint.LintResult{Status: lint.Error}
 	}
 }

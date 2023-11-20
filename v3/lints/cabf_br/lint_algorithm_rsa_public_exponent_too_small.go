@@ -16,16 +16,13 @@ package cabr_br
 
 import (
 	"crypto/rsa"
-	"math/big"
 
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 	"github.com/zmap/zlint/v3/util"
 )
 
-type rsaParsedTestsExpInRange struct {
-	upperBound *big.Int
-}
+type rsaParsedTestsExpBounds struct{}
 
 /*******************************************************************************************************
 "BRs: 6.1.6"
@@ -34,33 +31,29 @@ RSA: The CA SHALL confirm that the value of the public exponent is an odd number
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "w_rsa_public_exponent_not_in_range",
-		Description:   "RSA: Public exponent SHOULD be in the range between 2^16 + 1 and 2^256 - 1",
-		Citation:      "BRs: 6.1.6",
-		Source:        lint.CABFBaselineRequirements,
+		Name:          "e_rsa_public_exponent_too_small",
+		Description:   "RSA: Value of public exponent is an odd number equal to 3 or more.",
+		Citation:      "CSBRs: 6.1.6",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.CABV113Date,
-		Lint:          NewRsaParsedTestsExpInRange,
+		Lint:          NewRsaParsedTestsExpBounds,
 	})
 }
 
-func NewRsaParsedTestsExpInRange() lint.LintInterface {
-	l := &rsaParsedTestsExpInRange{}
-	l.upperBound = &big.Int{}
-	l.upperBound.Exp(big.NewInt(2), big.NewInt(256), nil)
-	return l
+func NewRsaParsedTestsExpBounds() lint.LintInterface {
+	return &rsaParsedTestsExpBounds{}
 }
 
-func (l *rsaParsedTestsExpInRange) CheckApplies(c *x509.Certificate) bool {
+func (l *rsaParsedTestsExpBounds) CheckApplies(c *x509.Certificate) bool {
 	_, ok := c.PublicKey.(*rsa.PublicKey)
 	return ok && c.PublicKeyAlgorithm == x509.RSA
 }
 
-func (l *rsaParsedTestsExpInRange) Execute(c *x509.Certificate) *lint.LintResult {
+func (l *rsaParsedTestsExpBounds) Execute(c *x509.Certificate) *lint.LintResult {
 	key := c.PublicKey.(*rsa.PublicKey)
-	exponent := key.E
-	const lowerBound = 65537 // 2^16 + 1
-	if exponent >= lowerBound && l.upperBound.Cmp(big.NewInt(int64(exponent))) == 1 {
+	if key.E >= 3 { //If Cmp returns 1, means N > E
 		return &lint.LintResult{Status: lint.Pass}
+	} else {
+		return &lint.LintResult{Status: lint.Error}
 	}
-	return &lint.LintResult{Status: lint.Warn}
 }

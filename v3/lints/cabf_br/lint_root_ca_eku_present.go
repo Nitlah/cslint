@@ -20,39 +20,36 @@ import (
 	"github.com/zmap/zlint/v3/util"
 )
 
-type evSNMissing struct{}
+type rootCAContainsEKU struct{}
+
+/************************************************
+BRs: 7.1.2.1d extendedKeyUsage
+This extension MUST NOT be present.
+************************************************/
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_ev_serial_number_missing",
-		Description:   "EV certificates must include serialNumber in subject",
-		Citation:      "EVGs: 9.2.6",
-		Source:        lint.CABFEVGuidelines,
-		EffectiveDate: util.ZeroDate,
-		Lint:          NewEvSNMissing,
+		Name:          "e_root_ca_extended_key_usage_present",
+		Description:   "Root CA Certificate: extendedKeyUsage MUST NOT be present.",
+		Citation:      "CSBRs: 7.1.2.1",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
+		Lint:          NewRootCAContainsEKU,
 	})
 }
 
-func NewEvSNMissing() lint.LintInterface {
-	return &evSNMissing{}
+func NewRootCAContainsEKU() lint.LintInterface {
+	return &rootCAContainsEKU{}
 }
 
-func (l *evSNMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return util.IsEV(c.PolicyIdentifiers) && util.IsSubscriberCert(c) && codeSigningParent
+func (l *rootCAContainsEKU) CheckApplies(c *x509.Certificate) bool {
+	return util.IsRootCA(c)
 }
 
-func (l *evSNMissing) Execute(c *x509.Certificate) *lint.LintResult {
-	if len(c.Subject.SerialNumber) == 0 {
+func (l *rootCAContainsEKU) Execute(c *x509.Certificate) *lint.LintResult {
+	if util.IsExtInCert(c, util.EkuSynOid) {
 		return &lint.LintResult{Status: lint.Error}
+	} else {
+		return &lint.LintResult{Status: lint.Pass}
 	}
-	return &lint.LintResult{Status: lint.Pass}
 }

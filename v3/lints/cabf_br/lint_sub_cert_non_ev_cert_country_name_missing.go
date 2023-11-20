@@ -35,9 +35,9 @@ func init() {
 		Name: "e_non_ev_cert_country_name_missing",
 		Description: "The subject:countryName MUST contain the two‐letter ISO 3166‐1 country" +
 			"code associated with the location of the Subject verified under BR Section 3.2.2.3",
-		Citation:      "BRs: 7.1.4.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.4.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewNonEVCertCountryNameMissing,
 	})
 }
@@ -47,16 +47,7 @@ func NewNonEVCertCountryNameMissing() lint.LintInterface {
 }
 
 func (l *nonEVCertCountryNameMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return codeSigningParent && util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
+	return util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
 }
 
 func (l *nonEVCertCountryNameMissing) Execute(c *x509.Certificate) *lint.LintResult {

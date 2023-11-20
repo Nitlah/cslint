@@ -36,9 +36,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "n_sub_cert_organization_unit_name_missing",
 		Description:   "Required/Optional: Optional",
-		Citation:      "BRs: 7.1.4.3.1",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.4.3.1",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewCertOrganizationUnitNameMissing,
 	})
 }
@@ -48,14 +48,7 @@ func NewCertOrganizationUnitNameMissing() lint.LintInterface {
 }
 
 func (l *certOrganizationUnitNameMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	for _, v := range c.ExtKeyUsage {
-		if v == x509.ExtKeyUsageCodeSigning {
-			codeSigningParent = true
-			break
-		}
-	}
-	return util.IsSubscriberCert(c) && codeSigningParent
+	return util.IsSubscriberCert(c)
 }
 
 func (l *certOrganizationUnitNameMissing) Execute(c *x509.Certificate) *lint.LintResult {

@@ -28,9 +28,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_ca_is_ca",
 		Description:   "Root and Sub CA Certificate: The CA field MUST be set to true.",
-		Citation:      "BRs: 7.1.2.1, BRs: 7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.1, CSBRs: 7.1.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.ZeroDate,
 		Lint:          NewCaIsCA,
 	})
 }

@@ -49,9 +49,9 @@ func init() {
 		Description: "Other values SHOULD NOT be present. If any other value is present, the CA MUST have a business" +
 			"agreement with a Platform vendor requiring that EKU in order to issue a Platform‐specific code" +
 			"signing certificate with that EKU.",
-		Citation:      "7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCaHasOtherEKUs,
 	})
 }
@@ -67,6 +67,7 @@ func (l *subCaHasDisallowEKUs) CheckApplies(c *x509.Certificate) bool {
 func (l *subCaHasDisallowEKUs) Execute(c *x509.Certificate) *lint.LintResult {
 	setEKU := make(map[int]int)
 	setEKU[int(x509.ExtKeyUsageCodeSigning)] = 1
+	setEKU[int(x509.ExtKeyUsageTimeStamping)] = 1
 	setEKU[int(x509.ExtKeyUsageMicrosoftLifetimeSigning)] = 1
 	setEKU[int(x509.ExtKeyUsageAny)] = 1
 	setEKU[int(x509.ExtKeyUsageServerAuth)] = 1

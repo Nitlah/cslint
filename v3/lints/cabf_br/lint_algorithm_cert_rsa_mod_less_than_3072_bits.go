@@ -37,9 +37,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_cert_rsa_mod_less_than_3072_bits",
 		Description:   "If the Key is RSA, then the modulus MUST be at least 3072 bits in length.",
-		Citation:      "BRs: 6.1.5",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABF_CSBR_2_6_Date,
+		Citation:      "CSBRs: 6.1.5",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.RSA3072Date,
 		Lint:          NewCertRsaParsedTestsKeySize,
 	})
 }

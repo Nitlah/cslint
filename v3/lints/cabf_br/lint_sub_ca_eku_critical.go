@@ -32,9 +32,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_sub_ca_eku_critical",
 		Description:   "This extension MUST be present and SHOULD NOT be marked critical.",
-		Citation:      "BRs: 7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABV116Date,
+		Citation:      "CSBRs: 7.1.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCAEKUCrit,
 	})
 }

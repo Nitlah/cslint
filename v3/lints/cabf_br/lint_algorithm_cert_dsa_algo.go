@@ -23,9 +23,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_dsa_signature_algorithm_id_check",
 		Description:   "The CA SHALL use the following signature algorithm: • DSA with SHA‐256",
-		Citation:      "7.1.3.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.3.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBRV30DATE,
 		Lint:          NewDSASignatureAlgorithmIdentiferCheck,
 	})
 }

@@ -31,9 +31,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_root_ca_contains_cert_policy",
 		Description:   "Root CA Certificate: certificatePolicies SHOULD NOT be present.",
-		Citation:      "BRs: 7.1.2.1",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.1",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewRootCAContainsCertPolicy,
 	})
 }

@@ -33,9 +33,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "n_non_EV_cert_street_address_missing",
 		Description:   "Required/Optional: Optional",
-		Citation:      "BRs: 7.1.4.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.4.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewnonEVCertStreetAddressMissing,
 	})
 }
@@ -45,16 +45,7 @@ func NewnonEVCertStreetAddressMissing() lint.LintInterface {
 }
 
 func (l *nonEVCertStreetAddressMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return codeSigningParent && util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
+	return util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
 
 }
 

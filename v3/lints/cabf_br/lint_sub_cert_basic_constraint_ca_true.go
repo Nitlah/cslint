@@ -41,9 +41,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_basic_constraints_ca_true",
 		Description:   "This extension MUST be present and MUST be marked critical.",
-		Citation:      "BRs: 7.1.2.2d",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.2d",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertBasicConstraintsCATrue,
 	})
 }
@@ -52,8 +52,8 @@ func NewSubCertBasicConstraintsCATrue() lint.LintInterface {
 	return &subCertBasicConstraintsCATrue{}
 }
 
+// todo: 该检测疑似无效
 func (l *subCertBasicConstraintsCATrue) CheckApplies(c *x509.Certificate) bool {
-
 	return util.IsSubscriberCert(c) && util.IsExtInCert(c, util.BasicConstOID)
 }
 

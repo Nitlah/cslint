@@ -32,9 +32,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_ca_crl_distribution_points_marked_critical",
 		Description:   "Subordinate CA Certificate: cRLDistributionPoints MUST be present and MUST NOT be marked critical.",
-		Citation:      "BRs: 7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCACRLDistCrit,
 	})
 }

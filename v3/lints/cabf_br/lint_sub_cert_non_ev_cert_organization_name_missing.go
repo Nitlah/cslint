@@ -42,10 +42,10 @@ a. Certificate Field: subject:organizationName (OID 2.5.4.10)
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_organization_name_missing",
-		Description:   "The subject:organizationName field MUST contain either the Subject’s name\nor DBA as verified under BR Section 3.2.",
-		Citation:      "BRs: 7.1.4.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Description:   "The subject:organizationName field MUST contain either the Subject’s name or DBA as verified under BR Section 3.2.",
+		Citation:      "CSBRs: 7.1.4.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewCertOrganizationNameMissing,
 	})
 }
@@ -55,16 +55,7 @@ func NewCertOrganizationNameMissing() lint.LintInterface {
 }
 
 func (l *certOrganizationNameMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return util.IsSubscriberCert(c) && codeSigningParent && !util.IsEV(c.PolicyIdentifiers)
+	return util.IsSubscriberCert(c) && !util.IsEV(c.PolicyIdentifiers)
 }
 
 func (l *certOrganizationNameMissing) Execute(c *x509.Certificate) *lint.LintResult {

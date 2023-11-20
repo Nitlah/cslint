@@ -45,13 +45,13 @@ f. extKeyUsage
 */
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name: "e_cert_eku_has_other_eku",
+		Name: "w_cert_eku_has_other_eku",
 		Description: "Other values SHOULD NOT be present. If any other value is present, " +
 			"the CA MUST have a business agreement with a Platform vendor requiring that EKU in order to " +
 			"issue a Platform‐specific code signing certificate with that EKU",
 		Citation:      "7.1.2.3",
 		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertHasOtherEKUs,
 	})
 }
@@ -73,34 +73,10 @@ func (l *subCertHasOtherEKUs) Execute(c *x509.Certificate) *lint.LintResult {
 	codeSigningEKU[int(x509.ExtKeyUsageAny)] = 1
 	codeSigningEKU[int(x509.ExtKeyUsageServerAuth)] = 1
 
-	timeStampingEKU := make(map[int]int)
-	timeStampingEKU[int(x509.ExtKeyUsageTimeStamping)] = 1
-	timeStampingEKU[int(x509.ExtKeyUsageAny)] = 1
-	timeStampingEKU[int(x509.ExtKeyUsageServerAuth)] = 1
-
-	codeSigningParent := false
-	timeStampingParent := false
 	for _, v := range c.ExtKeyUsage {
-		if v == x509.ExtKeyUsageCodeSigning {
-			codeSigningParent = true
-		} else if v == x509.ExtKeyUsageTimeStamping {
-			timeStampingParent = true
+		if _, exists := codeSigningEKU[int(v)]; !exists {
+			return &lint.LintResult{Status: lint.Warn}
 		}
 	}
-
-	if codeSigningParent {
-		for _, v := range c.ExtKeyUsage {
-			if _, exists := codeSigningEKU[int(v)]; !exists {
-				return &lint.LintResult{Status: lint.Warn}
-			}
-		}
-	} else if timeStampingParent {
-		for _, v := range c.ExtKeyUsage {
-			if _, exists := timeStampingEKU[int(v)]; !exists {
-				return &lint.LintResult{Status: lint.Warn}
-			}
-		}
-	}
-
 	return &lint.LintResult{Status: lint.Pass}
 }

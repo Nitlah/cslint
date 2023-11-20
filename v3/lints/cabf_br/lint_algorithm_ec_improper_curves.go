@@ -39,8 +39,8 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:        "e_ec_improper_curves",
 		Description: "Only one of NIST P‐256, P‐384, or P‐521 can be used",
-		Citation:    "BRs: 6.1.5",
-		Source:      lint.CABFBaselineRequirements,
+		Citation:    "CSBRs: 6.1.5",
+		Source:      lint.CSBaselineRequirements,
 		// Refer to BRs: 6.1.5, taking the statement "Before 31 Dec 2010" literally
 		EffectiveDate: util.ZeroDate,
 		Lint:          NewEcImproperCurves,

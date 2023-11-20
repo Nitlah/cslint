@@ -35,10 +35,10 @@ Issuing CA’s OCSP responder (accessMethod = 1.3.6.1.5.5.7.48.1).
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_ca_aia_does_not_contain_issuing_ca_url",
-		Description:   "Subordinate CA Certificate: authorityInformationAccess MUST  contain the HTTP URL of the Issuing CA's certificate.",
-		Citation:      "BRs: 7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Description:   "Subordinate CA Certificate: authorityInformationAccess MUST contain the HTTP URL of the Issuing CA's certificate.",
+		Citation:      "CSBRs: 7.1.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCaIssuerUrl,
 	})
 }

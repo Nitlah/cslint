@@ -34,6 +34,7 @@ const (
 	RFC5891                  LintSource = "RFC5891"
 	RFC8813                  LintSource = "RFC8813" // ---
 	CABFBaselineRequirements LintSource = "CABF_BR" // xx
+	CSBaselineRequirements   LintSource = "CSBR"    // xx
 	CABFEVGuidelines         LintSource = "CABF_EV" //xx
 	MozillaRootStorePolicy   LintSource = "Mozilla" // xx
 	AppleRootStorePolicy     LintSource = "Apple"   // xx

@@ -26,9 +26,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_aia_marked_critical",
 		Description:   "Subscriber Certificate: authorityInformationAccess MUST NOT be marked critical",
-		Citation:      "BRs: 7.1.2.3",
+		Citation:      "CSBRs: 7.1.2.3",
 		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertAiaMarkedCritical,
 	})
 }
@@ -38,7 +38,6 @@ func NewSubCertAiaMarkedCritical() lint.LintInterface {
 }
 
 func (l *subCertAiaMarkedCritical) CheckApplies(c *x509.Certificate) bool {
-
 	return util.IsSubscriberCert(c) && util.IsExtInCert(c, util.AiaOID)
 }
 

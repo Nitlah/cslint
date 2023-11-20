@@ -62,8 +62,8 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_ev_jurisdiction_missing",
 		Description:   "EV certificates must include jurisdictionCountryName in subject",
-		Citation:      "BRs:7.1.4.2.4",
-		Source:        lint.CABFEVGuidelines,
+		Citation:      "CSBRs:7.1.4.2.4",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.ZeroDate,
 		Lint:          NewEvNoJurisdiction,
 	})
@@ -74,16 +74,7 @@ func NewEvNoJurisdiction() lint.LintInterface {
 }
 
 func (l *evNoJurisdiction) CheckApplies(c *x509.Certificate) bool {
-	ekuFields := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				ekuFields = true
-				break
-			}
-		}
-	}
-	return util.IsEV(c.PolicyIdentifiers) && util.IsSubscriberCert(c) && ekuFields
+	return util.IsEV(c.PolicyIdentifiers) && util.IsSubscriberCert(c)
 }
 
 func (l *evNoJurisdiction) Execute(c *x509.Certificate) *lint.LintResult {

@@ -34,21 +34,22 @@ If the Subordinate CA will be used to issue Timestamp Certificates:
   - id-kp-timeStamping MUST be present.
   - id-kp-codeSigning MUST NOT be present
 */
-func init() {
-	lint.RegisterLint(&lint.Lint{
-		Name: "e_ca_eku_has_code_signing_and_time_stamping",
-		Description: "If the Subordinate CA will be used to issue Code Signing Certificates:" +
-			"• id-kp-codeSigning MUST be present." +
-			"• id-kp-timeStamping MUST NOT be present." +
-			"If the Subordinate CA will be used to issue Timestamp Certificates:" +
-			"• id-kp-timeStamping MUST be present." +
-			"• id-kp-codeSigning MUST NOT be present",
-		Citation:      "7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
-		Lint:          NewSubCaHasTsAndCsEKUs,
-	})
-}
+
+//func init() {
+//	lint.RegisterLint(&lint.Lint{
+//		Name: "e_ca_eku_has_code_signing_and_time_stamping",
+//		Description: "If the Subordinate CA will be used to issue Code Signing Certificates:" +
+//			"• id-kp-codeSigning MUST be present." +
+//			"• id-kp-timeStamping MUST NOT be present." +
+//			"If the Subordinate CA will be used to issue Timestamp Certificates:" +
+//			"• id-kp-timeStamping MUST be present." +
+//			"• id-kp-codeSigning MUST NOT be present",
+//		Citation:      "CSBRs: 7.1.2.3",
+//		Source:        lint.CSBaselineRequirements,
+//		EffectiveDate: util.CSBREffectiveDate,
+//		Lint:          NewSubCaHasTsAndCsEKUs,
+//	})
+//}
 
 func NewSubCaHasTsAndCsEKUs() lint.LintInterface {
 	return &subCaHasTsAndCsEKUs{}

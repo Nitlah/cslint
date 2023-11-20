@@ -50,9 +50,9 @@ func init() {
 			"• anyExtendedKeyUsage" +
 			"• id-kp-serverAuth" +
 			"• id-kp-emailProtection",
-		Citation:      "7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.2",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCaHasExtraEKUs,
 	})
 }
@@ -67,7 +67,7 @@ func (l *subCaHasExtraEKUs) CheckApplies(c *x509.Certificate) bool {
 
 func (l *subCaHasExtraEKUs) Execute(c *x509.Certificate) *lint.LintResult {
 	for _, v := range c.ExtKeyUsage {
-		if v == x509.ExtKeyUsageAny || v == x509.ExtKeyUsageServerAuth || v == x509.ExtKeyUsageEmailProtection {
+		if v == x509.ExtKeyUsageAny || v == x509.ExtKeyUsageServerAuth || v == x509.ExtKeyUsageEmailProtection || v == x509.ExtKeyUsageTimeStamping {
 			return &lint.LintResult{Status: lint.Error}
 		}
 	}

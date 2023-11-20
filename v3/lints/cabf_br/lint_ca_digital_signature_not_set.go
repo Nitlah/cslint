@@ -24,12 +24,10 @@ type caDigSignNotSet struct{}
 
 /************************************************
 BRs: 7.1.2.1b: Root CA Certificate keyUsage
-This extension MUST be present and MUST be marked critical. Bit positions for keyCertSign and cRLSign MUST be set.
 If the Root CA Private Key is used for signing OCSP responses, then the digitalSignature bit MUST be set.
 
 BRs: 7.1.2.2e: Subordinate CA Certificate keyUsage
-This extension MUST be present and MUST be marked critical. Bit positions for keyCertSign and cRLSign MUST be set.
-If the Root CA Private Key is used for signing OCSP responses, then the digitalSignature bit MUST be set.
+If the Subordinate CA Private Key is used for signing OCSP responses, then the digitalSignature bit MUST be set.
 ************************************************/
 
 func init() {
@@ -37,9 +35,9 @@ func init() {
 		Name: "n_ca_digital_signature_not_set",
 		Description: "Root and Subordinate CA Certificates that wish to use their private key for signing OCSP responses" +
 			" will not be able to without their digital signature set",
-		Citation:      "BRs: 7.1.2.1",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.1",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewCaDigSignNotSet,
 	})
 }

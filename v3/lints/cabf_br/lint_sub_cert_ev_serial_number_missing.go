@@ -20,40 +20,30 @@ import (
 	"github.com/zmap/zlint/v3/util"
 )
 
-type evOrgMissing struct{}
+type evSNMissing struct{}
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_ev_organization_name_missing",
-		Description:   "EV certificates must include organizationName in subject",
-		Citation:      "EVGs: 9.2.1",
-		Source:        lint.CABFEVGuidelines,
+		Name:          "e_ev_serial_number_missing",
+		Description:   "EV certificates must include serialNumber in subject",
+		Citation:      "CSBRs: 9.2.6",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.ZeroDate,
-		Lint:          NewEvOrgMissing,
+		Lint:          NewEvSNMissing,
 	})
 }
 
-func NewEvOrgMissing() lint.LintInterface {
-	return &evOrgMissing{}
+func NewEvSNMissing() lint.LintInterface {
+	return &evSNMissing{}
 }
 
-func (l *evOrgMissing) CheckApplies(c *x509.Certificate) bool {
-	codeSigningParent := false
-	if c.ExtKeyUsage != nil {
-		for _, v := range c.ExtKeyUsage {
-			if v == x509.ExtKeyUsageCodeSigning {
-				codeSigningParent = true
-				break
-			}
-		}
-	}
-	return util.IsEV(c.PolicyIdentifiers) && util.IsSubscriberCert(c) && codeSigningParent
+func (l *evSNMissing) CheckApplies(c *x509.Certificate) bool {
+	return util.IsEV(c.PolicyIdentifiers) && util.IsSubscriberCert(c)
 }
 
-func (l *evOrgMissing) Execute(c *x509.Certificate) *lint.LintResult {
-	if c.Subject.Organization != nil && c.Subject.Organization[0] != "" {
-		return &lint.LintResult{Status: lint.Pass}
-	} else {
+func (l *evSNMissing) Execute(c *x509.Certificate) *lint.LintResult {
+	if len(c.Subject.SerialNumber) == 0 {
 		return &lint.LintResult{Status: lint.Error}
 	}
+	return &lint.LintResult{Status: lint.Pass}
 }

@@ -52,7 +52,7 @@ func init() {
 			"• id-kp-serverAuth",
 		Citation:      "BRs:7.1.2.3",
 		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertHasDisallowEKUs,
 	})
 }

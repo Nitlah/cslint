@@ -26,16 +26,18 @@ type subCaPathLenPresent struct{}
 /************************************************************************************************************
 7.1.2.1. Root CA Certificate
 a. basicConstraints
-This extension MUST appear as a critical extension. The cA field MUST be set true. The pathLenConstraint field SHOULD NOT be present.
+	This extension MUST appear as a critical extension.
+	The cA field MUST be set true.
+	The pathLenConstraint field SHOULD NOT be present.
 ***********************************************************************************************************/
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_root_ca_basic_constraints_path_len_constraint_field_present",
 		Description:   "Root CA certificate basicConstraint extension pathLenConstraint field SHOULD not be present",
-		Citation:      "BRs: 7.1.2.1",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.1",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBRV30DATE,
 		Lint:          NewSubCaPathLenPresent,
 	})
 }

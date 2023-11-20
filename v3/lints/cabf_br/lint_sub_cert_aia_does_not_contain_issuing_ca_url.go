@@ -35,9 +35,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_aia_does_not_contain_issuing_ca_url",
 		Description:   "Subscriber certificates :It MUST contain the HTTP URL of the Issuing CA’s certificate (accessMethod = 1.3.6.1.5.5.7.48.2).",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertIssuerUrl,
 	})
 }
@@ -47,7 +47,6 @@ func NewSubCertIssuerUrl() lint.LintInterface {
 }
 
 func (l *subCertIssuerUrl) CheckApplies(c *x509.Certificate) bool {
-
 	return util.IsSubscriberCert(c)
 }
 

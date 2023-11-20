@@ -34,10 +34,11 @@ a. Certificate Field: subject:commonName (OID 2.5.4.3)
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sub_cert_common_name_missing",
-		Description:   "EV and Non‑EV Code Signing Certificates MUST have a commonName present in subject information",
-		Citation:      "BRs: 7.1.4.2",
-		Source:        lint.CABFBaselineRequirements,
+		Name:        "e_sub_cert_common_name_missing",
+		Description: "EV and Non‑EV Code Signing Certificates MUST have a commonName present in subject information",
+		Citation:    "CSBRs: 7.1.4.2",
+		Source:      lint.CSBaselineRequirements,
+		// todo:实际还没确定
 		EffectiveDate: util.CABEffectiveDate,
 		Lint:          NewSubCertCommonNameMissing,
 	})
@@ -48,7 +49,6 @@ func NewSubCertCommonNameMissing() lint.LintInterface {
 }
 
 func (l *subCertCommonNameMissing) CheckApplies(c *x509.Certificate) bool {
-
 	return util.IsSubscriberCert(c)
 }
 

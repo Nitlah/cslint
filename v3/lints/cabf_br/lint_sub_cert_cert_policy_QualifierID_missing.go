@@ -35,9 +35,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "w_sub_cert_certificate_policies_QualifiersId_missing",
 		Description:   "certificatePolicies:policyQualifiers:policyQualifierId (Recommended)",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCertPolicyQualifierIDMissing,
 	})
 }

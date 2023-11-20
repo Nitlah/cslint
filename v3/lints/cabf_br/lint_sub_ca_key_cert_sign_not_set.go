@@ -26,7 +26,7 @@ import (
 type subCaKeyCertSignNotSet struct{}
 
 /************************************************
-BRs: 7.1.2.2b
+BRs: 7.1.2.2E
 This extension MUST be present and MUST be marked critical. Bit positions for keyCertSign and cRLSign MUST be set.
 If the Root CA Private Key is used for signing OCSP responses, then the digitalSignature bit MUST be set.
 ************************************************/
@@ -35,9 +35,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_ca_key_cert_sign_not_set",
 		Description:   "This extension MUST be present and MUST be marked critical.",
-		Citation:      "BRs: 7.1.2.2",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.2e",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCaKeyCertSignNotSet,
 	})
 }

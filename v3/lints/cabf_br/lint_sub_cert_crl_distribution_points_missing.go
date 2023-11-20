@@ -33,9 +33,9 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_sub_cert_crl_distribution_points_missing",
 		Description:   "Subscriber Certificate: This extension MUST be present. It MUST NOT be marked critical, and it MUST contain the HTTP URL of the CA’s CRL service.",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
 		Lint:          NewSubCrlDistMissing,
 	})
 }

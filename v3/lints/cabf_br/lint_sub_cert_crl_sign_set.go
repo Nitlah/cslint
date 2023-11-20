@@ -20,7 +20,7 @@ import (
 	"github.com/zmap/zlint/v3/util"
 )
 
-type subCertCRLSignNotSet struct{}
+type subCertCRLSignSet struct{}
 
 /************************************************
 BRs: 7.1.2.1b
@@ -31,27 +31,27 @@ signing OCSP responses, then the digitalSignature bit MUST be set.
 
 func init() {
 	lint.RegisterLint(&lint.Lint{
-		Name:          "e_sub_cert_crl_sign_not_set",
+		Name:          "e_sub_cert_crl_sign_set",
 		Description:   "Bit positions for keyCertSign and cRLSign MUST NOT be set.",
-		Citation:      "BRs: 7.1.2.3",
-		Source:        lint.CABFBaselineRequirements,
-		EffectiveDate: util.CABEffectiveDate,
-		Lint:          NewSubCertCRLSignNotSet,
+		Citation:      "CSBRs: 7.1.2.3",
+		Source:        lint.CSBaselineRequirements,
+		EffectiveDate: util.CSBREffectiveDate,
+		Lint:          NewSubCertCRLSignSet,
 	})
 }
 
-func NewSubCertCRLSignNotSet() lint.LintInterface {
-	return &subCertCRLSignNotSet{}
+func NewSubCertCRLSignSet() lint.LintInterface {
+	return &subCertCRLSignSet{}
 }
 
-func (l *subCertCRLSignNotSet) CheckApplies(c *x509.Certificate) bool {
+func (l *subCertCRLSignSet) CheckApplies(c *x509.Certificate) bool {
 	return util.IsSubCA(c) && util.IsExtInCert(c, util.KeyUsageOID)
 }
 
-func (l *subCertCRLSignNotSet) Execute(c *x509.Certificate) *lint.LintResult {
+func (l *subCertCRLSignSet) Execute(c *x509.Certificate) *lint.LintResult {
 	if c.KeyUsage&x509.KeyUsageCRLSign != 0 {
-		return &lint.LintResult{Status: lint.Pass}
-	} else {
 		return &lint.LintResult{Status: lint.Error}
+	} else {
+		return &lint.LintResult{Status: lint.Pass}
 	}
 }

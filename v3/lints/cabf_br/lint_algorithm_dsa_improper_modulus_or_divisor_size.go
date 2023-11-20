@@ -27,8 +27,8 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_dsa_improper_modulus_or_divisor_size",
 		Description:   "Certificates MUST meet the following requirements for DSA aglorithm type and key size: L=2048 and N=224 or N=256",
-		Citation:      "BRs v1.7.0: 6.1.5",
-		Source:        lint.CABFBaselineRequirements,
+		Citation:      "CSBRs: 6.1.5",
+		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.ZeroDate,
 		Lint:          NewDsaImproperSize,
 	})
