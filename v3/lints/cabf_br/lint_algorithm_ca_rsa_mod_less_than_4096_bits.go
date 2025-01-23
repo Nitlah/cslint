@@ -22,8 +22,6 @@ import (
 	"github.com/zmap/zlint/v3/util"
 )
 
-type CARsaParsedTestsKeySize struct{}
-
 /*
 6.1.5.1 Root and Subordinate CA key sizes
 For Keys corresponding to Root and Subordinate CAs:
@@ -36,20 +34,22 @@ func init() {
 		Citation:      "CSBRs: 6.1.5",
 		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.RSA4096Date,
-		Lint:          NewCARsaParsedTestsKeySize,
+		Lint:          NewCARsaKeySize,
 	})
 }
 
-func NewCARsaParsedTestsKeySize() lint.LintInterface {
-	return &CARsaParsedTestsKeySize{}
+type CARsaKeySize struct{}
+
+func NewCARsaKeySize() lint.LintInterface {
+	return &CARsaKeySize{}
 }
 
-func (l *CARsaParsedTestsKeySize) CheckApplies(c *x509.Certificate) bool {
+func (l *CARsaKeySize) CheckApplies(c *x509.Certificate) bool {
 	_, ok := c.PublicKey.(*rsa.PublicKey)
-	return ok && c.PublicKeyAlgorithm == x509.RSA && util.IsCACert(c)
+	return ok && c.PublicKeyAlgorithm == x509.RSA && (util.IsCACert(c) || util.IsSelfSigned(c))
 }
 
-func (l *CARsaParsedTestsKeySize) Execute(c *x509.Certificate) *lint.LintResult {
+func (l *CARsaKeySize) Execute(c *x509.Certificate) *lint.LintResult {
 	key := c.PublicKey.(*rsa.PublicKey)
 	if key.N.BitLen() < 4096 {
 		return &lint.LintResult{Status: lint.Error}

@@ -22,8 +22,6 @@ import (
 	"github.com/zmap/zlint/v3/util"
 )
 
-type CertRsaParsedTestsKeySize struct{}
-
 /*
 6.1.5.2 Code signing Certificate and Timestamp Authority key sizes
 For Keys corresponding to Subscriber code signing and Timestamp Authority Certificates:
@@ -40,20 +38,22 @@ func init() {
 		Citation:      "CSBRs: 6.1.5",
 		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.RSA3072Date,
-		Lint:          NewCertRsaParsedTestsKeySize,
+		Lint:          NewCertRsaKeySize,
 	})
 }
 
-func NewCertRsaParsedTestsKeySize() lint.LintInterface {
-	return &CertRsaParsedTestsKeySize{}
+type CertRsaKeySize struct{}
+
+func NewCertRsaKeySize() lint.LintInterface {
+	return &CertRsaKeySize{}
 }
 
-func (l *CertRsaParsedTestsKeySize) CheckApplies(c *x509.Certificate) bool {
+func (l *CertRsaKeySize) CheckApplies(c *x509.Certificate) bool {
 	_, ok := c.PublicKey.(*rsa.PublicKey)
 	return ok && c.PublicKeyAlgorithm == x509.RSA && util.IsSubscriberCert(c)
 }
 
-func (l *CertRsaParsedTestsKeySize) Execute(c *x509.Certificate) *lint.LintResult {
+func (l *CertRsaKeySize) Execute(c *x509.Certificate) *lint.LintResult {
 	key := c.PublicKey.(*rsa.PublicKey)
 	if key.N.BitLen() < 3072 {
 		return &lint.LintResult{Status: lint.Error}

@@ -32,7 +32,7 @@ func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_root_ca_basic_constraints_not_critical",
 		Description:   "Root CA Certificate: basicConstraints: This extension MUST appear as a critical extension.",
-		Citation:      "CSBRs: 7.1.2.1, RFC 5280: 4.2.1.3",
+		Citation:      "CSBRs: 7.1.2.1, RFC 5280: 4.2.1.9",
 		Source:        lint.CSBaselineRequirements,
 		EffectiveDate: util.RFC3280Date,
 		Lint:          NewRootCABasicConstraintsCritical,

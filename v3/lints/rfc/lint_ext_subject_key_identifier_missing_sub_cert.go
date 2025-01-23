@@ -58,7 +58,7 @@ func NewSubjectKeyIdMissingSubscriber() lint.LintInterface {
 }
 
 func (l *subjectKeyIdMissingSubscriber) CheckApplies(cert *x509.Certificate) bool {
-	return !util.IsCACert(cert)
+	return !util.IsCACert(cert) && !cert.SelfSigned
 }
 
 func (l *subjectKeyIdMissingSubscriber) Execute(cert *x509.Certificate) *lint.LintResult {

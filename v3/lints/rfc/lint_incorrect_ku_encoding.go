@@ -31,7 +31,7 @@ func init() {
 		Citation:      "Where ITU-T Rec. X.680 | ISO/IEC 8824-1, 21.7, applies, the bitstring shall have all trailing 0 bits removed before it is encoded.",
 		Source:        lint.RFC5280,
 		EffectiveDate: util.ZeroDate,
-		Lint:          func() lint.LintInterface { return &incorrectKuEncoding{} },
+		Lint:          NewIncorrectKuEncoding,
 	})
 }
 

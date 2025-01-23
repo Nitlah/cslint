@@ -28,8 +28,9 @@ func init() {
 		Description:   "Root CA certificates MUST have Key Usage Extension marked critical",
 		Citation:      "CSBRs: 7.1.2.1",
 		Source:        lint.CSBaselineRequirements,
-		EffectiveDate: util.RFC2459Date,
-		Lint:          NewRootCAKeyUsageMustBeCritical,
+		EffectiveDate: util.CSBREffectiveDate,
+		//EffectiveDate: util.RFC2459Date,
+		Lint: NewRootCAKeyUsageMustBeCritical,
 	})
 }
 

@@ -39,7 +39,7 @@ to Unicode normalization form C (NFC) [NFC].
 func init() {
 	lint.RegisterLint(&lint.Lint{
 		Name:          "e_ext_cert_policy_explicit_text_ia5_string",
-		Description:   "Compliant certificates must not encode explicitTest as an IA5String",
+		Description:   "Compliant certificates must not encode explicitText as an IA5String",
 		Citation:      "RFC 6818: 3",
 		Source:        lint.RFC5280,
 		EffectiveDate: util.RFC6818Date,

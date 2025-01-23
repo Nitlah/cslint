@@ -1,4 +1,4 @@
-package rfc
+package legacy
 
 /*
  * ZLint Copyright 2021 Regents of the University of Michigan
@@ -15,13 +15,12 @@ package rfc
  */
 
 import (
-	"fmt"
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/v3/lint"
 	"github.com/zmap/zlint/v3/util"
 )
 
-type authorityKeyIdMissing struct{}
+type authorityKeyIdNoKeyIdField struct{}
 
 /***********************************************************************
 RFC 5280: 4.2.1.1
@@ -36,37 +35,29 @@ The keyIdentifier field of the authorityKeyIdentifier extension MUST
    In this case, the subject and authority key identifiers would be
    identical, but only the subject key identifier is needed for
    certification path building.
-
-authorityKeyIdentifier：该字段必须存在且绝对不能被标记为关键扩展
 ***********************************************************************/
 
 //func init() {
 //	lint.RegisterLint(&lint.Lint{
-//		Name:          "e_ext_authority_key_identifier_missing",
-//		Description:   "CAs must support key identifiers and include them in all certificates",
-//		Citation:      "RFC 5280: 4.2 & 4.2.1.1",
+//		Name:          "e_ext_authority_key_identifier_no_key_identifier",
+//		Description:   "CAs must include keyIdentifer field of AKI in all non-self-issued certificates",
+//		Citation:      "BRs:7.1.2.3 & RFC 5280: 4.2.1.1",
 //		Source:        lint.RFC5280,
 //		EffectiveDate: util.RFC2459Date,
-//		Lint:          NewAuthorityKeyIdMissing,
+//		Lint:          NewAuthorityKeyIdNoKeyIdField,
 //	})
 //}
 
-func NewAuthorityKeyIdMissing() lint.LintInterface {
-	return &authorityKeyIdMissing{}
+func NewAuthorityKeyIdNoKeyIdField() lint.LintInterface {
+	return &authorityKeyIdNoKeyIdField{}
 }
 
-// CheckApplies 根证书没有该字段
-func (l *authorityKeyIdMissing) CheckApplies(c *x509.Certificate) bool {
-	return !util.IsRootCA(c)
+func (l *authorityKeyIdNoKeyIdField) CheckApplies(c *x509.Certificate) bool {
+	return true
 }
 
-func (l *authorityKeyIdMissing) Execute(c *x509.Certificate) *lint.LintResult {
-	if !util.IsExtInCert(c, util.AuthkeyOID) && !util.IsSelfSigned(c) {
-		if util.IsExtInCert(c, util.AuthkeyDeprecatedOID) {
-			return &lint.LintResult{Status: lint.Warn,
-				Details: fmt.Sprintf("Certificate contains deprecated authorityKeyIdentifier"),
-			}
-		}
+func (l *authorityKeyIdNoKeyIdField) Execute(c *x509.Certificate) *lint.LintResult {
+	if c.AuthorityKeyId == nil && !util.IsSelfSigned(c) { //will be nil by default if not found in x509.parseCert
 		return &lint.LintResult{Status: lint.Error}
 	} else {
 		return &lint.LintResult{Status: lint.Pass}

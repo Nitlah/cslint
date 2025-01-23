@@ -45,7 +45,7 @@ func NewSubCertCRLSignSet() lint.LintInterface {
 }
 
 func (l *subCertCRLSignSet) CheckApplies(c *x509.Certificate) bool {
-	return util.IsSubCA(c) && util.IsExtInCert(c, util.KeyUsageOID)
+	return util.IsSubscriberCert(c) && util.IsExtInCert(c, util.KeyUsageOID)
 }
 
 func (l *subCertCRLSignSet) Execute(c *x509.Certificate) *lint.LintResult {

@@ -1,4 +1,4 @@
-package cabr_br
+package legacy
 
 /*
  * ZLint Copyright 2021 Regents of the University of Michigan
@@ -30,6 +30,7 @@ private key is compromised. The validity for a Timestamp Certificate must not ex
 The Timestamp Certificate MUST meet the requirements in Section 6.1.5 for the communicated
 time period.
 */
+
 type timeStampValidTooLong struct{}
 
 //TODO:用于时间戳证书

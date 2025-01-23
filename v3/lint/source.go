@@ -32,14 +32,14 @@ const (
 	RFC5280                  LintSource = "RFC5280"
 	RFC5480                  LintSource = "RFC5480"
 	RFC5891                  LintSource = "RFC5891"
-	RFC8813                  LintSource = "RFC8813" // ---
-	CABFBaselineRequirements LintSource = "CABF_BR" // xx
-	CSBaselineRequirements   LintSource = "CSBR"    // xx
-	CABFEVGuidelines         LintSource = "CABF_EV" //xx
-	MozillaRootStorePolicy   LintSource = "Mozilla" // xx
-	AppleRootStorePolicy     LintSource = "Apple"   // xx
-	Community                LintSource = "Community"
-	EtsiEsi                  LintSource = "ETSI_ESI"
+	RFC8813                  LintSource = "RFC8813"   // ---
+	CABFBaselineRequirements LintSource = "CABF_BR"   // xx
+	CSBaselineRequirements   LintSource = "CABF_CSBR" // xx
+	//CABFEVGuidelines         LintSource = "CABF_EV" //xx
+	// MozillaRootStorePolicy   LintSource = "Mozilla" // xx
+	// AppleRootStorePolicy     LintSource = "Apple"   // xx
+	// Community                LintSource = "Community"
+	// EtsiEsi                  LintSource = "ETSI_ESI"
 )
 
 // UnmarshalJSON implements the json.Unmarshaler interface. It ensures that the
@@ -51,7 +51,7 @@ func (s *LintSource) UnmarshalJSON(data []byte) error {
 	}
 
 	switch LintSource(throwAway) {
-	case RFC5280, RFC5480, RFC5891, CABFBaselineRequirements, CABFEVGuidelines, MozillaRootStorePolicy, AppleRootStorePolicy, Community, EtsiEsi:
+	case RFC5280, RFC5480, RFC5891, CABFBaselineRequirements:
 		*s = LintSource(throwAway)
 		return nil
 	default:
@@ -77,16 +77,16 @@ func (s *LintSource) FromString(src string) {
 		*s = RFC5891
 	case CABFBaselineRequirements:
 		*s = CABFBaselineRequirements
-	case CABFEVGuidelines:
-		*s = CABFEVGuidelines
-	case MozillaRootStorePolicy:
-		*s = MozillaRootStorePolicy
-	case AppleRootStorePolicy:
-		*s = AppleRootStorePolicy
-	case Community:
-		*s = Community
-	case EtsiEsi:
-		*s = EtsiEsi
+		//case CABFEVGuidelines:
+		//	*s = CABFEVGuidelines
+		//case MozillaRootStorePolicy:
+		//	*s = MozillaRootStorePolicy
+		//case AppleRootStorePolicy:
+		//	*s = AppleRootStorePolicy
+		//case Community:
+		//	*s = Community
+		//case EtsiEsi:
+		//	*s = EtsiEsi
 	}
 }
 

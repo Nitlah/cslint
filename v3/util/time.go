@@ -38,7 +38,7 @@ var (
 	//CSBRV31DATE       = time.Date(2022, time.September, 19, 0, 0, 0, 0, time.UTC)
 	//CSBRV32DATE       = time.Date(2022, time.October, 28, 0, 0, 0, 0, time.UTC)
 	//CSBRV33DATE       = time.Date(2023, time.June, 29, 0, 0, 0, 0, time.UTC)
-	//CSBRV34DATE       = time.Date(2023, time.September, 5, 0, 0, 0, 0, time.UTC)
+	CSBRV34DATE = time.Date(2023, time.September, 5, 0, 0, 0, 0, time.UTC)
 	// https://cabforum.org/wp-content/uploads/Baseline-Requirements-for-the-Issuance-and-Management-of-Code-Signing-Certificates.v.1.2.pdf
 	RSA3072Date = time.Date(2021, time.June, 1, 0, 0, 0, 0, time.UTC)
 	RSA4096Date = time.Date(2021, time.June, 1, 0, 0, 0, 0, time.UTC)
@@ -57,7 +57,7 @@ var (
 	RFC6818Date      = time.Date(2013, time.January, 1, 0, 0, 0, 0, time.UTC)
 	RFC8813Date      = time.Date(2020, time.August, 1, 0, 0, 0, 0, time.UTC)
 	CABEffectiveDate = time.Date(2012, time.July, 1, 0, 0, 0, 0, time.UTC)
-	//CABEffectiveDate           = time.Date(2019, time.August, 13, 0, 0, 0, 0, time.UTC)
+
 	CABReservedIPDate          = time.Date(2016, time.October, 1, 0, 0, 0, 0, time.UTC)
 	CABGivenNameDate           = time.Date(2016, time.September, 7, 0, 0, 0, 0, time.UTC)
 	CABSerialNumberEntropyDate = time.Date(2016, time.September, 30, 0, 0, 0, 0, time.UTC)

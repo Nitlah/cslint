@@ -56,5 +56,4 @@ func (l *subCaAuthorityKeyIdCritical) Execute(c *x509.Certificate) *lint.LintRes
 		return &lint.LintResult{Status: lint.Pass}
 	}
 	return &lint.LintResult{Status: lint.Error}
-
 }
